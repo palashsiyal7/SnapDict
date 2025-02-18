@@ -5,7 +5,7 @@ class Settings:
     PROJECT_NAME = "SnapDict"
     PROJECT_VERSION = "1.0.0"
     API_V1_STR = "/api/v1"
-    PORT = 8001
+    PORT = 8000
     
 def initialize_nltk():
     try:

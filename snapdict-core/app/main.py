@@ -1,5 +1,5 @@
 # app/main.py
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from .config import initialize_nltk, settings
 from .services import ocr, word_processing
 
@@ -15,18 +15,14 @@ initialize_nltk()
 async def process_image(image: UploadFile = File(...)):
     # Validate file type
     if not image.content_type.startswith('image/'):
-        return {
-            "error": "Uploaded file must be an image"
-        }, 400
+        raise HTTPException(status_code=400, detail="Uploaded file must be an image")
         
     try:
         image_content = await image.read()
         text = ocr.process_image_file(image_content)
         
         if not text:
-            return {
-                "error": "No text could be extracted from the image"
-            }, 400
+            raise HTTPException(status_code=400, detail="No text could be extracted from the image")
             
         complex_words = {}
         for word in text.split():
@@ -42,10 +38,6 @@ async def process_image(image: UploadFile = File(...)):
         }
         
     except ValueError as e:
-        return {
-            "error": str(e)
-        }, 400
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        return {
-            "error": "An unexpected error occurred while processing the image"
-        }, 500
+        raise HTTPException(status_code=500, detail="An unexpected error occurred while processing the image")

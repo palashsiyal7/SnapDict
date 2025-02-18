@@ -12,7 +12,7 @@ SnapDict Core is the backend service for the SnapDict application. This guide wi
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/snapdict-core.git
+   git clone https://github.com/palashsiyal7/snapdict-core.git
    cd snapdict-core
    ```
 

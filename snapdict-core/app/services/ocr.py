@@ -1,3 +1,4 @@
+# ocr.py
 from PIL import Image
 import pytesseract
 import io
