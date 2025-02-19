@@ -30,17 +30,44 @@ export default function UploadScreen({ route, navigation }) {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
+          timeout: 130000,
         }
       );
-      // response.data should contain { complex_words: {...}, ... }
+
+      // Check if response data is empty or has no text content
+      if (!response.data || 
+          (Object.keys(response.data.complex_words || {}).length === 0 && 
+           Object.keys(response.data.definitions || {}).length === 0)) {
+        throw new Error('NO_TEXT_FOUND');
+      }
+
       console.log('Upload response:', response.data);
       navigation.navigate('Result', { data: response.data });
     } catch (error) {
       console.error('Upload error:', error);
-      Alert.alert(
-        'Upload Failed',
-        'Could not process the image. Please try again.'
-      );
+      
+      // Handle specific error cases
+      if (error.message === 'NO_TEXT_FOUND') {
+        Alert.alert(
+          'No Text Detected',
+          'We couldn\'t find any text in your image. Please make sure the image contains clear, readable text and try again.'
+        );
+      } else if (error.response?.status === 413) {
+        Alert.alert(
+          'Image Too Large',
+          'The image file is too large. Please try with a smaller image.'
+        );
+      } else if (!error.response) {
+        Alert.alert(
+          'Connection Error',
+          'Please check your internet connection and try again.'
+        );
+      } else {
+        Alert.alert(
+          'Upload Failed',
+          'Could not process the image. Please try again.'
+        );
+      }
     } finally {
       setLoading(false);
     }
