@@ -19,9 +19,11 @@
     "@react-navigation/stack": "^7.1.1",
     "axios": "^1.7.9",
     "expo": "^52.0.0",
+    "expo-blur": "^14.0.3",
     "expo-camera": "~16.0.16",
     "expo-file-system": "~18.0.10",
     "expo-image-picker": "~16.0.6",
+    "expo-linear-gradient": "~12.7.2",
     "expo-status-bar": "~2.0.1",
     "react": "18.3.1",
     "react-native": "0.76.7",
@@ -34,9 +36,9 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@react-native-community/cli": "latest",
+    "@types/react": "~18.3.12",
     "react-native-dotenv": "^3.4.11",
-    "typescript": "^5.3.3",
-    "@types/react": "~18.3.12"
+    "typescript": "^5.3.3"
   },
   "private": true
 }

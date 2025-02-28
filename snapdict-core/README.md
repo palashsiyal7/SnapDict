@@ -46,6 +46,25 @@ SnapDict Core is the backend service for the SnapDict application. This guide wi
    pip install -r requirements.txt
    ```
 
+5. **Download NLTK data:**
+
+   The application requires several NLTK datasets to function properly. You can download them automatically by running the setup script:
+
+   ```bash
+   python setup_nltk.py
+   ```
+
+   If you encounter issues with the automatic download, you can manually download the required NLTK data using the Python interpreter:
+
+   ```python
+   import nltk
+   nltk.download('punkt')
+   nltk.download('wordnet')
+   nltk.download('stopwords')
+   nltk.download('averaged_perceptron_tagger')
+   nltk.download('omw-1.4')
+   ```
+
 ## Running the Backend
 
 1. **Navigate to the application directory:**
@@ -57,10 +76,40 @@ SnapDict Core is the backend service for the SnapDict application. This guide wi
    You can start the backend server using the following command:
 
    ```bash
-   python app/main.py
+   uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
    ```
 
    The server should start, and you can access it at `http://localhost:8000` or the specified port.
+
+3. **API Documentation:**
+
+   Once the server is running, you can access the auto-generated API documentation at:
+   
+   - Swagger UI: `http://localhost:8000/docs`
+   - ReDoc: `http://localhost:8000/redoc`
+
+## Troubleshooting
+
+### NLTK Resource Errors
+
+If you see errors related to missing NLTK resources, ensure you've run the setup script:
+
+```bash
+python setup_nltk.py
+```
+
+If issues persist, you may need to manually specify the NLTK data path:
+
+```bash
+export NLTK_DATA=/path/to/nltk_data
+```
+
+Or in Python:
+
+```python
+import nltk
+nltk.data.path.append('/path/to/nltk_data')
+```
 
 ## Contributing
 
